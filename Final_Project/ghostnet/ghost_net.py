@@ -116,7 +116,7 @@ class GhostNet(nn.Module):
         # building first layer
         output_channel = _make_divisible(16 * width_mult, 4)
         layers = [nn.Sequential(
-            nn.Conv2d(3, output_channel, 3, 2, 1, bias=False),
+            nn.Conv2d(1, output_channel, 3, 2, 1, bias=False),
             nn.BatchNorm2d(output_channel),
             nn.ReLU(inplace=True)
         )]
