@@ -36,8 +36,11 @@ def TestGhost(test_data):
     predict_y: torch.Tensor
     The prediction made by the ghostnet 
     '''
-    model = torch.load('GhostNet.pkl') #load_model make sure that this file is in the same file of the model
-    model = model.to(device)   #transfer the model to the target
+    if not torch.cuda.is_available():
+        model = torch.load('GhostNet.pkl', map_location=torch.device('cpu')) #load_model make sure that this file is in the same file of the model
+    else:
+        model = torch.load('GhostNet.pkl')
+    test_data = torch.Tensor(test_data)
     predicted_digit = model(test_data.to(device))
     _, predicted = torch.max(predicted_digit, 1)
     predicted = predicted.cpu() #finally transfer it to cpu tensor
